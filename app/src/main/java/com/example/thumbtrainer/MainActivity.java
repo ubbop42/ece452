@@ -1,13 +1,15 @@
 package com.example.thumbtrainer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
+import  com.example.thumbtrainer.PatternActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ToggleButton;
 import android.media.MediaPlayer;
 
@@ -37,6 +39,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final Button classicButton = findViewById(R.id.classic_button);
+        classicButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PatternActivity.class);
+                intent.putExtra("isClassic", true);
+                startActivity(intent);
+            }
+        });
+        final Button rapidButton = findViewById(R.id.rapid_button);
+        rapidButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mp.stop();
+                Intent intent = new Intent(v.getContext(), PatternActivity.class);
+                intent.putExtra("isClassic", false);
+                startActivity(intent);
+            }
+        });
+
+        final Button dualButton = findViewById(R.id.dual_button);
+        dualButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO launch typing game
+            }
+        });
+
+
 
     }
 
