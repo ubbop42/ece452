@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import  com.example.thumbtrainer.PatternActivity;
+import  com.example.thumbtrainer.TypingActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
         dualButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO launch typing game
+                mp.stop();
+                Intent intent = new Intent(v.getContext(), TypingActivity.class);
+                // Intent intent = new Intent(v.getContext(), PatternActivity.class);
+                intent.putExtra("isClassic", true);
+                startActivity(intent);
             }
         });
-
 
 
     }
