@@ -169,7 +169,7 @@ public class patternView extends ViewGroup {
             return super.onTouchEvent(event);
         } else{
             Toast.makeText(getContext(), "Use Your Thumb"+size, Toast.LENGTH_SHORT).show();
-            return super.onTouchEvent(event);
+            return false;
         }
     }
 

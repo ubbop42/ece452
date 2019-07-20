@@ -1,57 +1,86 @@
 package com.example.thumbtrainer;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
-import androidx.appcompat.app.AppCompatActivity;
-import patternView.patternView;
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TypingActivity extends AppCompatActivity {
     int counter = 0;
-    private patternView patternView;
-    ArrayList<String> listOfPatterns = new ArrayList<>();
-    TextView timeText;
     TextView text;
-
     EditText textBox;
-    final String[] proper_noun = {"Fred", "Jane", "Nixon", "Miss"};
-    long startTime = 0;
+    TextView timeText;
+    String toType;
+    int length;
+    String[] words;
+    int index;
+
+    public String[] getWords()  throws IOException{
+        BufferedReader reader = null;
+        List<String> lines = new ArrayList<>();
+        reader = new BufferedReader(
+                new InputStreamReader(getAssets().open("words.txt"), "UTF-8"));
+
+        String mLine;
+        while ((mLine = reader.readLine()) != null) {
+            lines.add(mLine);
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.typing);
 
-        Intent intent = getIntent();
+        try {
+            words = getWords();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        boolean isClassic = intent.getBooleanExtra("isClassic",true);
+        length = words.length;
 
         text = findViewById(R.id.text);
-        timeText = findViewById(R.id.timer);
 
         final Random random = new Random();
-        int index = random.nextInt(proper_noun.length);
-        final String initalText = proper_noun[index];
+        index = random.nextInt(length);
 
-        //text.setText(toType);
-        text.setText(proper_noun[index]);
+        toType=words[index];
+
+        text.setText(toType);
         textBox = (EditText)findViewById(R.id.plain_text_input);
+        timeText = findViewById(R.id.timer);
         textBox.setVisibility(View.VISIBLE);
 
-        startTime = System.currentTimeMillis();
+
+        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
+        mp.start();
+
+        new CountDownTimer(150000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timeText.setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                // TODO: launch leaderboard
+            }
+        }.start();
+
+
 
         textBox.addTextChangedListener(new TextWatcher() {
 
@@ -62,38 +91,17 @@ public class TypingActivity extends AppCompatActivity {
                                           int count, int after) {
             }
 
-            String currentText = null;
-            int index;
-
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                Log.d("text box",""+s);
 
-                Log.d("text",""+initalText);
-                Log.d("text",""+currentText);
 
-                if(s.toString().equals(initalText)) {
+                if(s.toString().equalsIgnoreCase(toType)) {
                     Random random = new Random();
-                    index = random.nextInt(proper_noun.length);
-                    currentText = proper_noun[index];
-                    text.setText(proper_noun[index]);
+                    index = random.nextInt(length);
+                    toType = words[index];
+                    text.setText(toType);
                     textBox.setText(null);
                     counter++;
-                }
-
-                if(s.toString().equals(currentText)){
-                    Random random = new Random();
-                    index = random.nextInt(proper_noun.length);
-                    currentText = proper_noun[index];
-                    text.setText(proper_noun[index]);
-                    textBox.setText(null);
-                    counter++;
-
-                    if(counter == 5) {
-                        double time = (System.currentTimeMillis() - startTime)/1000.0;
-                        textBox.setVisibility(View.INVISIBLE);
-                        text.setText("Your Time: "+ time);
-                    }
                 }
             }
         });
