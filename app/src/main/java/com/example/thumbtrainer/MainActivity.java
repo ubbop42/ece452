@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), PatternActivity.class);
                 intent.putExtra("isClassic", true);
                 startActivity(intent);
+
             }
         });
         final Button rapidButton = findViewById(R.id.rapid_button);

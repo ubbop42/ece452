@@ -15,6 +15,7 @@ import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.thumbtrainer.R;
 
@@ -111,59 +112,65 @@ public class patternView extends ViewGroup {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                NodeView nodeAt = getNodeAt(event.getX(), event.getY());
-                if (nodeAt == null && currentNode == null) {
-                    return true;
-                } else {
-                    clearScreenAndDrawList();
-                    if (currentNode == null) {
-                        currentNode = nodeAt;
-                        currentNode.setHighLighted(true);
-                        pwdSb.append(currentNode.getNum());
-                    }
-                    else if (nodeAt == null || nodeAt.isHighLighted()) {
-
-                        canvas.drawLine(currentNode.getCenterX(), currentNode.getCenterY(), event.getX(), event.getY(), paint);
+        float size = event.getSize();
+        float thresholdThumbSize = 0.025f;
+        if(size > thresholdThumbSize) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_MOVE:
+                    NodeView nodeAt = getNodeAt(event.getX(), event.getY());
+                    if (nodeAt == null && currentNode == null) {
+                        return true;
                     } else {
-                        canvas.drawLine(currentNode.getCenterX(), currentNode.getCenterY(), nodeAt.getCenterX(), nodeAt.getCenterY(), paint);
-                        nodeAt.setHighLighted(true);
-                        Pair<NodeView, NodeView> pair = new Pair<NodeView, NodeView>(currentNode, nodeAt);
-                        lineList.add(pair);
+                        clearScreenAndDrawList();
+                        if (currentNode == null) {
+                            currentNode = nodeAt;
+                            currentNode.setHighLighted(true);
+                            pwdSb.append(currentNode.getNum());
+                        } else if (nodeAt == null || nodeAt.isHighLighted()) {
 
-                        currentNode = nodeAt;
-                        pwdSb.append(currentNode.getNum());
+                            canvas.drawLine(currentNode.getCenterX(), currentNode.getCenterY(), event.getX(), event.getY(), paint);
+                        } else {
+                            canvas.drawLine(currentNode.getCenterX(), currentNode.getCenterY(), nodeAt.getCenterX(), nodeAt.getCenterY(), paint);
+                            nodeAt.setHighLighted(true);
+                            Pair<NodeView, NodeView> pair = new Pair<NodeView, NodeView>(currentNode, nodeAt);
+                            lineList.add(pair);
+
+                            currentNode = nodeAt;
+                            pwdSb.append(currentNode.getNum());
+                        }
+                        invalidate();
                     }
+                    return true;
+
+                case MotionEvent.ACTION_UP:
+
+                    if (pwdSb.length() <= 0) {
+                        return super.onTouchEvent(event);
+                    }
+
+                    if (callBack != null) {
+                        callBack.onFinish(pwdSb.toString());
+                        pwdSb.setLength(0);
+                    }
+
+                    currentNode = null;
+                    lineList.clear();
+                    clearScreenAndDrawList();
+
+                    for (int n = 0; n < getChildCount(); n++) {
+                        NodeView node = (NodeView) getChildAt(n);
+                        node.setHighLighted(false);
+                    }
+
                     invalidate();
-                }
-                return true;
-
-            case MotionEvent.ACTION_UP:
-
-                if (pwdSb.length() <= 0) {
-                    return super.onTouchEvent(event);
-                }
-
-                if (callBack != null) {
-                    callBack.onFinish(pwdSb.toString());
-                    pwdSb.setLength(0);
-                }
-
-                currentNode = null;
-                lineList.clear();
-                clearScreenAndDrawList();
-
-                for (int n = 0; n < getChildCount(); n++) {
-                    NodeView node = (NodeView) getChildAt(n);
-                    node.setHighLighted(false);
-                }
-
-                invalidate();
-                return true;
+                    return true;
+            }
+            return super.onTouchEvent(event);
+        } else{
+            Toast.makeText(getContext(), "Use Your Thumb"+size, Toast.LENGTH_SHORT).show();
+            return super.onTouchEvent(event);
         }
-        return super.onTouchEvent(event);
     }
 
     private void clearScreenAndDrawList() {
@@ -245,12 +252,9 @@ public class patternView extends ViewGroup {
             return num;
         }
 
-        public void setNum(int num) {
-            this.num = num;
-        }
     }
 
     public interface CallBack {
-        public void onFinish(String password);
+         void onFinish(String password);
     }
 }
