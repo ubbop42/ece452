@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +43,14 @@ public class TypingActivity extends AppCompatActivity {
     String[] words;
     int index;
     int points = 0;
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
     public String[] getWords()  throws IOException{
         BufferedReader reader = null;
@@ -102,6 +112,8 @@ public class TypingActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_window, null);
+
+                closeKeyboard();
 
                 int width = 1200;
                 int height = 1600;
