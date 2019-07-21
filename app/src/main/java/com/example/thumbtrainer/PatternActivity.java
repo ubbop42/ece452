@@ -41,7 +41,7 @@ public class PatternActivity extends AppCompatActivity {
             MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
             mp.start();
             counterText.setText("0");
-            new CountDownTimer(150000, 1000) {
+            new CountDownTimer(1500, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     timeText.setText("" + millisUntilFinished / 1000);
