@@ -12,14 +12,16 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.thumbtrainer.leaderboardLogic.CustomListAdapter;
 import com.example.thumbtrainer.leaderboardLogic.Items;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
     Intent intent = getIntent();
-    String gamemode = intent.getStringExtra("GAMEMODE");
-    String highscore = Integer.toString(intent.getIntExtra("SCORE", 0));
+
+    String gamemode;
+    String highscore;
 
     private List<Items> itemsList = new ArrayList<Items>();
     private ListView listView;
@@ -29,6 +31,11 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+
+        Intent intent = getIntent();
+
+        gamemode = intent.getStringExtra("GAMEMODE");
+        highscore = Integer.toString(intent.getIntExtra("SCORE", 0));
         SQLiteDatabase myDB = null;
 
         try {
