@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import patternView.patternView;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ public class PatternActivity extends AppCompatActivity {
     ArrayList<String> listOfPatterns = new ArrayList<>();
     TextView counterText;
     TextView timeText;
+    boolean isClassic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class PatternActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        boolean isClassic = intent.getBooleanExtra("isClassic",true);
+        isClassic = intent.getBooleanExtra("isClassic",true);
 
         counterText = findViewById(R.id.counter);
         timeText = findViewById(R.id.timer);
@@ -51,6 +53,19 @@ public class PatternActivity extends AppCompatActivity {
             }.start();
         }
 
+        View view = findViewById(R.id.patternView);
+        view.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view,MotionEvent event) {
+                float size = event.getSize();
+
+                Toast.makeText(view.getContext(), ""+size, Toast.LENGTH_SHORT).show();
+                return true;
+
+            }
+        });
+
         patternView.setCallBack(new patternView.CallBack() {
 
             @Override
@@ -68,4 +83,14 @@ public class PatternActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (isClassic) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(this, "can't go back now", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

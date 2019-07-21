@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final ToggleButton soundButton = contentView.findViewById(R.id.toggle_button);
         soundButton.setChecked(true);
 
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.game_music);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.hmk);
         mp.setLooping(true);
         mp.start();
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), PatternActivity.class);
                 intent.putExtra("isClassic", true);
                 startActivity(intent);
+
             }
         });
         final Button rapidButton = findViewById(R.id.rapid_button);
@@ -62,10 +64,20 @@ public class MainActivity extends AppCompatActivity {
         final Button dualButton = findViewById(R.id.dual_button);
         dualButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO launch typing game
+                mp.stop();
+                Intent intent = new Intent(v.getContext(), TypingActivity.class);
+                startActivity(intent);
             }
         });
 
+        final Button freestyleButton = findViewById(R.id.freestyle_button);
+        freestyleButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mp.stop();
+                Intent intent = new Intent(v.getContext(), SwipeActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
