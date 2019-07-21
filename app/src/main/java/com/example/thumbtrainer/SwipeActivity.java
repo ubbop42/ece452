@@ -64,7 +64,7 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
     }
 
     public void onGameOver(int score) {
-        //TODO
+        //TODO launch leaderboard with score
         Toast.makeText(this, "score"+score, LENGTH_SHORT).show ();
     }
 

@@ -12,9 +12,9 @@ import android.graphics.Paint;
 public class GameTimer {
 
     private final Paint timeRemainingPaint = new Paint();
-    private final DateFormat formatter = new SimpleDateFormat("ss:SSS", Locale.UK);
+    private final DateFormat formatter = new SimpleDateFormat("ss:S", Locale.UK);
     
-    private static final int GAME_ROUND_TIME_MILLISECONDS = 60 * 1000;
+    private static final int GAME_ROUND_TIME_MILLISECONDS = 180 * 1000;
 
     private long startTime = 0;
     private long elapsedTime = 0;
@@ -52,6 +52,6 @@ public class GameTimer {
     }
 
     public void draw(Canvas canvas) {
-	canvas.drawText(formatter.format(new Date(getMillisecondsRemaining())), 10, 50, timeRemainingPaint);	
+	    canvas.drawText(formatter.format(new Date(getMillisecondsRemaining())), 20, 100, timeRemainingPaint);
     }
 }
