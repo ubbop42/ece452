@@ -1,4 +1,5 @@
 package com.example.thumbtrainer;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -76,7 +77,10 @@ public class TypingActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                // TODO: launch leaderboard
+                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                intent.putExtra("SCORE",counter);
+                intent.putExtra("GAMEMODE", "TypingActivity");
+                startActivity(intent);
             }
         }.start();
 

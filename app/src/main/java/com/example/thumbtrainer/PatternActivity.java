@@ -48,7 +48,10 @@ public class PatternActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                   // TODO: launch leaderboard
+                    Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                    intent.putExtra("SCORE",counter);
+                    intent.putExtra("GAMEMODE", "PatternActivity");
+                    startActivity(intent);
                 }
             }.start();
         }
