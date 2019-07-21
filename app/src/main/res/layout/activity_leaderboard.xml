@@ -10,10 +10,29 @@
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
+        android:cacheColorHint="#FFFFFF"
         android:clipToPadding="false"
         android:dividerHeight="1dp"
-        android:cacheColorHint="#FFFFFF"
-        android:layout_marginTop="56dp" />
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="417dp"
+        android:layout_height="46dp"
+        android:fontFamily="@font/amethysta"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="#000000"
+        android:background="@color/colorPrimary"
+        android:text="Leaderboard"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
