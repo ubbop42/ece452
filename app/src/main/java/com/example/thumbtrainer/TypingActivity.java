@@ -78,7 +78,7 @@ public class TypingActivity extends AppCompatActivity {
         StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
         ss.setSpan(italicSpan, 11, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new RelativeSizeSpan(0.7f), 0,12, 0);
-        ss.setSpan(new ForegroundColorSpan(Color.GRAY), 0, 12, 0);
+        ss.setSpan(new ForegroundColorSpan(Color.WHITE), 0, 12, 0);
 
         text.setText(ss);
         textBox = (EditText)findViewById(R.id.plain_text_input);
