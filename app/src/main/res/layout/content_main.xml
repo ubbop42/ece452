@@ -40,7 +40,6 @@
         android:background="@drawable/mainmenu_button_bgc"
         android:fontFamily="@font/amethysta"
         android:text="CLASSIC"
-        android:text="Im Happy"
         android:textColor="@drawable/mainmenu_button_txtc"
         android:textSize="24dp"
         android:textStyle="bold"

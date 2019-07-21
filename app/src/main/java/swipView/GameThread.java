@@ -103,7 +103,7 @@ public class GameThread implements Runnable {
 
 			    projectileManager.draw(canvas);
 			    timer.draw(canvas);
-			    canvas.drawText("Score: " + score, width - 160, 50, scorePaint);
+			    canvas.drawText("Score: " + score, width - 160, 100, scorePaint);
 
 			    if (paths != null) {
 				for (int i = 0; i < paths.size(); i++) {
