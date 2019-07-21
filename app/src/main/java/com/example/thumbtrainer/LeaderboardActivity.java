@@ -17,8 +17,10 @@ import android.widget.ListView;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
-    String gamemode = getIntent().getStringExtra("GAMEMODE");
-    int highscore = getIntent().getIntExtra("SCORE", 0);
+    Intent intent = getIntent();
+    String gamemode = intent.getStringExtra("GAMEMODE");
+    String highscore = Integer.toString(intent.getIntExtra("SCORE", 0));
+
     private List<Items> itemsList = new ArrayList<Items>();
     private ListView listView;
     private CustomListAdapter adapter;
@@ -33,11 +35,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                 myDB = this.openOrCreateDatabase("leaderboard", MODE_PRIVATE, null);
 
                 Cursor cursor;
-                if (gamemode == "PatternActivity") {
+                if (gamemode.equals("PatternActivity")) {
                     myDB.execSQL("CREATE TABLE IF NOT EXISTS scores_pattern (name TEXT, score TEXT);");
                     cursor = myDB.rawQuery("SELECT * FROM scores_pattern", null);
 
-                } else if (gamemode == "TypingActivity") {
+                } else if (gamemode.equals("TypingActivity")) {
                     myDB.execSQL("CREATE TABLE IF NOT EXISTS scores_typing (name TEXT, score TEXT);");
                     cursor = myDB.rawQuery("SELECT * FROM scores_typing", null);
                 } else {
@@ -45,22 +47,19 @@ public class LeaderboardActivity extends AppCompatActivity {
                     cursor = myDB.rawQuery("SELECT * FROM scores_swipe", null);
                 }
 
-                if (cursor != null) {
-                    if (cursor.getCount() == 0) {
-
-                        myDB.execSQL("INSERT INTO scores_pattern (name, score) VALUES ('Andy', '7');");
-                        myDB.execSQL("INSERT INTO scores_pattern (name, score) VALUES ('Marie', '4');");
-                        myDB.execSQL("INSERT INTO scores_pattern (name, score) VALUES ('George', '1');");
-
-                    }
-                }
-            //myDB.execSQL("INSERT INTO scores (name, score) VALUES (" + gamemode + ", '" + highscore + "');");
+                //REPLACE gamemode with name when launching issue is resolved
+            if (gamemode.equals("PatternActivity")) {
+                myDB.execSQL("INSERT INTO scores_pattern (name, score) VALUES ('" + gamemode + "', '" + highscore + "');");
+            }  else if (gamemode.equals("TypingActivity")) {
+                myDB.execSQL("INSERT INTO scores_typing (name, score) VALUES ('" + gamemode + "', '" + highscore + "');");
+            } else {
+                myDB.execSQL("INSERT INTO scores_swipe (name, score) VALUES ('" + gamemode + "', '" + highscore + "');");
+            }
 
         } catch (Exception e) {
 
         } finally {
 
-            //Initialize and create a new adapter with layout named list found in activity_main layout
 
             listView = (ListView) findViewById(R.id.list);
             adapter = new CustomListAdapter(this, itemsList);
@@ -68,9 +67,9 @@ public class LeaderboardActivity extends AppCompatActivity {
 
 
             Cursor cursor;
-            if (gamemode == "PatternActivity") {
+            if (gamemode.equals("PatternActivity")) {
                 cursor = myDB.rawQuery("SELECT * FROM scores_pattern", null);
-            } else if (gamemode == "TypingActivity"){
+            }  else if (gamemode.equals("TypingActivity")) {
                 cursor = myDB.rawQuery("SELECT * FROM scores_typing", null);
             } else {
                 cursor = myDB.rawQuery("SELECT * FROM scores_swipe", null);
