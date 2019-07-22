@@ -1,5 +1,6 @@
 package com.example.thumbtrainer;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
@@ -64,7 +65,10 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
     }
 
     public void onGameOver(int score) {
-        //TODO launch leaderboard with score
+        Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+        intent.putExtra("SCORE",score);
+        intent.putExtra("GAMEMODE", "SwipeActivity");
+        startActivity(intent);
         Toast.makeText(this, "score"+score, LENGTH_SHORT).show ();
     }
 

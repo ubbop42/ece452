@@ -113,6 +113,10 @@ public class TypingActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
+                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                intent.putExtra("SCORE",counter);
+                intent.putExtra("GAMEMODE", "TypingActivity");
+                startActivity(intent);
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_window, null);

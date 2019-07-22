@@ -41,14 +41,17 @@ public class PatternActivity extends AppCompatActivity {
             MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
             mp.start();
             counterText.setText("0");
-            new CountDownTimer(150000, 1000) {
+            new CountDownTimer(1500, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     timeText.setText("" + millisUntilFinished / 1000);
                 }
 
                 public void onFinish() {
-                   // TODO: launch leaderboard
+                    Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                    intent.putExtra("SCORE",counter);
+                    intent.putExtra("GAMEMODE", "PatternActivity");
+                    startActivity(intent);
                 }
             }.start();
         }
