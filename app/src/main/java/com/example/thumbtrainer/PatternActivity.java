@@ -130,13 +130,4 @@ public class PatternActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isClassic) {
-            super.onBackPressed();
-        } else {
-            Toast.makeText(this, "can't go back now", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 }
