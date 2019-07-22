@@ -45,7 +45,7 @@ public class RecordThumbActivity extends AppCompatActivity {
         final Button leftButton = contentView.findViewById(R.id.left_button);
         final Button rightButton = contentView.findViewById(R.id.right_button);
         final TextView instructions = contentView.findViewById(R.id.thumb_detection_instruction);
-        final String updatedInstruction = "Press the button on the right 10 times with your thumb";
+        final String updatedInstruction = "Tap the button on the right 10 times with your thumb";
 
         leftButton.setOnTouchListener(new View.OnTouchListener() {
 
