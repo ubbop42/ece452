@@ -60,18 +60,18 @@ public class GameThread implements Runnable {
 	this.timer.startGame();
 	this.self = executor.scheduleAtFixedRate(this, 0, 10, TimeUnit.MILLISECONDS);
 
-	this.scorePaint.setColor(Color.MAGENTA);
+	this.scorePaint.setColor(Color.parseColor("#40E0D0"));
 	this.scorePaint.setAntiAlias(true);
 	this.scorePaint.setTextSize(38.0f);
 
 	this.linePaint.setAntiAlias(true);
-	this.linePaint.setColor(Color.YELLOW);
+	this.linePaint.setColor(Color.parseColor("#40E0D0"));
 	this.linePaint.setStyle(Paint.Style.STROKE);
 	this.linePaint.setStrokeJoin(Paint.Join.ROUND);
-	this.linePaint.setStrokeWidth(5.0f);
+	this.linePaint.setStrokeWidth(20.0f);
 
 	this.linePaintBlur.set(this.linePaint);
-	this.linePaintBlur.setMaskFilter(new BlurMaskFilter(9.0f, BlurMaskFilter.Blur.NORMAL));
+	this.linePaintBlur.setMaskFilter(new BlurMaskFilter(20.0f, BlurMaskFilter.Blur.NORMAL));
     }
 
     @Override

@@ -110,7 +110,7 @@ public class TypingActivity extends AppCompatActivity {
         MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
         mp.start();
 
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timeText.setText("Time Left : " + millisUntilFinished / 1000);

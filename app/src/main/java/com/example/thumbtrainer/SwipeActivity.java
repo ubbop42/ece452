@@ -29,80 +29,52 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class SwipeActivity extends AppCompatActivity implements GameFragment.OnGameOver {
     Context context = this;
     int counter = 0;
-    TextView counterText;
-    TextView timeText;
-    ImageView image;
-    private float x1,x2,y1,y2;
-    static final int MIN_DISTANCE = 150;
-    String currGesture;
-    String[] gestures = {"up","down","left","right","o"};
-    final Random random = new Random();
-    final int length = gestures.length;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
-        counterText = findViewById(R.id.counter);
-        timeText = findViewById(R.id.timer);
-        image = findViewById(R.id.action_image);
+        GameFragment gameFragment = new GameFragment();
 
-        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
-        mp.start();
-
- /*       new CountDownTimer(150000, 1000) {
+        new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                timeText.setText("" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-                final EditText username = (EditText) findViewById(R.id.username);
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.prompts, null);
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setView(promptsView);
+                final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
 
-                    LayoutInflater li = LayoutInflater.from(context);
-                    View promptsView = li.inflate(R.layout.prompts, null);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        String user =userInput.getText().toString();
+                                        Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                        intent.putExtra("USER", user);
+                                        intent.putExtra("SCORE", counter);
+                                        intent.putExtra("GAMEMODE", "SwipeActivity");
+                                        startActivity(intent);
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setView(promptsView);
-                    final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+                AlertDialog alertDialog = alertDialogBuilder.create();
 
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,int id) {
-                                            // get user input and set it to result
-                                            // edit text
-                                            username.setText(userInput.getText());
-                                            Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-                                            intent.putExtra("USER", username.getText().toString());
-                                            intent.putExtra("SCORE",counter);
-                                            intent.putExtra("GAMEMODE", "SwipeActivity");
-                                            startActivity(intent);
-                                        }
-                                    })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-
-                    // show it
-                    alertDialog.show();
-                    //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-                    //intent.putExtra("USER", username.getText().toString());
-                    //intent.putExtra("SCORE",points);
-                    //intent.putExtra("GAMEMODE", "TypingActivity");
-                    //startActivity(intent);
+                alertDialog.show();
             }
-        }.start();
-*/
-//        nextGesture();
-
-        GameFragment gameFragment = new GameFragment();
+        };
 
         FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, gameFragment, "Game");
@@ -111,9 +83,6 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
     }
 
     public void onGameOver(int score) {
-        Toast.makeText(this, "score" + score, LENGTH_SHORT).show();
-        //final EditText username = (EditText) findViewById(R.id.username);
-
 
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.prompts, null);
@@ -146,89 +115,7 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
 
         AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
         alertDialog.show();
-        //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-        //intent.putExtra("USER", username.getText().toString());
-        //intent.putExtra("SCORE",points);
-        //intent.putExtra("GAMEMODE", "TypingActivity");
-        //startActivity(intent);
     }
-
-//    public void nextGesture(){
-//        currGesture = gestures[random.nextInt(length)];
-//        Toast.makeText(this, currGesture, LENGTH_SHORT).show ();
-//        counterText.setText(counter+"");
-//        counter++;
-//        if(currGesture.equals("left")){
-//            image.setImageResource(R.drawable.left);
-//        } else  if(currGesture.equals("right")){
-//            image.setImageResource(R.drawable.left);
-//        } else if(currGesture.equals("up")){
-//            image.setImageResource(R.drawable.left);
-//        } else if(currGesture.equals("down")){
-//            image.setImageResource(R.drawable.left);
-//        } else if(currGesture.equals("o")){
-//            image.setImageResource(R.drawable.left);
-//        }
-//        image.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
-//    }
-//
-//    public boolean onTouchEvent(MotionEvent event)
-//    {
-//        switch(event.getAction())
-//        {
-//            case MotionEvent.ACTION_DOWN:
-//                x1 = event.getX();
-//                y1 = event.getY();
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                x2 = event.getX();
-//                y2 = event.getY();
-//                float deltaX = x2 - x1;
-//                float deltaY = y2 - y1;
-//                if (Math.abs(deltaX) > MIN_DISTANCE)
-//                {
-//                    // Left to Right swipe action
-//                    if (x2 > x1 && currGesture.equals("right"))
-//                    {
-//                        Toast.makeText(this, "Right swipe", LENGTH_SHORT).show ();
-//                        nextGesture();
-//                    }
-//
-//                    // Right to left swipe action
-//                    else if(x2 < x1 && currGesture.equals("left"))
-//                    {
-//                        Toast.makeText(this, "Left swipe", LENGTH_SHORT).show ();
-//                        nextGesture();
-//
-//                    }
-//                }
-//                else if (Math.abs(deltaY) > MIN_DISTANCE)
-//                {
-//                    // Left to Right swipe action
-//                    if (y2 > y1 && currGesture.equals("down"))
-//                    {
-//                        Toast.makeText(this, "Down swipe", LENGTH_SHORT).show ();
-//                        nextGesture();
-//
-//                    }
-//
-//                    // Right to left swipe action
-//                    else if(y2 < y1 && currGesture.equals("up"))
-//                    {
-//                        Toast.makeText(this, "Up swipe", LENGTH_SHORT).show ();
-//                        nextGesture();
-//                    }
-//                }
-//                else if (Math.abs(deltaY) < MIN_DISTANCE && Math.abs(deltaX) < MIN_DISTANCE && currGesture.equals("o"))
-//                {
-//                    Toast.makeText(this, "o", LENGTH_SHORT).show ();
-//                    nextGesture();
-//                }
-//                break;
-//        }
-//        return super.onTouchEvent(event);
-//    }
 
 }

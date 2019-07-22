@@ -1,6 +1,7 @@
 package patternView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -21,6 +22,8 @@ import com.example.thumbtrainer.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class patternView extends ViewGroup {

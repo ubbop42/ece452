@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,15 @@ public class PatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pattern);
 
+        final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+        float rightThumb = preferences.getFloat("rightThumb", 0.020f);
+        float leftThumb = preferences.getFloat("leftThumb", 0.020f);
+
+        Toast.makeText(this, "r:"+rightThumb +"l:"+leftThumb, Toast.LENGTH_LONG).show();
+
+
         Intent intent = getIntent();
 
         isClassic = intent.getBooleanExtra("isClassic",true);
@@ -44,18 +54,14 @@ public class PatternActivity extends AppCompatActivity {
             timeText.setVisibility(View.INVISIBLE);
             counterText.setText("0");
         } else{
-            MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
-            mp.start();
             counterText.setText("0");
-            new CountDownTimer(150000, 1000) {
+            new CountDownTimer(60000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     timeText.setText("" + millisUntilFinished / 1000);
                 }
 
                 public void onFinish() {
-                    //final EditText username = (EditText) findViewById(R.id.username);
-
 
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.prompts, null);
@@ -90,11 +96,6 @@ public class PatternActivity extends AppCompatActivity {
 
                     // show it
                     alertDialog.show();
-                    //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-                    //intent.putExtra("USER", username.getText().toString());
-                    //intent.putExtra("SCORE",points);
-                    //intent.putExtra("GAMEMODE", "TypingActivity");
-                    //startActivity(intent);
                 }
             }.start();
         }
@@ -122,7 +123,39 @@ public class PatternActivity extends AppCompatActivity {
                     counter++;
                     counterText.setText(counter+"");
                     if(counter == 389112){
-                        //TODO: launch leaderboard
+                        LayoutInflater li = LayoutInflater.from(context);
+                        View promptsView = li.inflate(R.layout.prompts, null);
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setView(promptsView);
+                        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                // get user input and set it to result
+                                                // edit text
+                                                String user = userInput.getText().toString();
+                                                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                                intent.putExtra("USER", user);
+                                                intent.putExtra("SCORE",counter);
+                                                intent.putExtra("GAMEMODE", "PatternActivity");
+                                                startActivity(intent);
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
                     }
                 }
             }

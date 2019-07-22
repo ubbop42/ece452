@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         final Button rapidButton = findViewById(R.id.rapid_button);
         rapidButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mp.stop();
                 Intent intent = new Intent(v.getContext(), PatternActivity.class);
                 intent.putExtra("isClassic", false);
                 startActivity(intent);
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         final Button dualButton = findViewById(R.id.dual_button);
         dualButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mp.stop();
                 Intent intent = new Intent(v.getContext(), TypingActivity.class);
                 startActivity(intent);
             }
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         final Button freestyleButton = findViewById(R.id.freestyle_button);
         freestyleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mp.stop();
                 Intent intent = new Intent(v.getContext(), SwipeActivity.class);
                 startActivity(intent);
             }

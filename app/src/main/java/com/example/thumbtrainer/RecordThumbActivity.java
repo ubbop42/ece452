@@ -29,14 +29,14 @@ public class RecordThumbActivity extends AppCompatActivity {
         final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         final SharedPreferences.Editor editor = preferences.edit();
 
-        boolean leftThumbRecorded = preferences.contains("leftThumb");
-        boolean rightThumbRecorded = preferences.contains("rightThumb");
-        boolean thumbRecorded = leftThumbRecorded && rightThumbRecorded;
-
-        if (thumbRecorded) {
-            Intent gotoMainMenu = new Intent(this, MainActivity.class);
-            startActivity(gotoMainMenu);
-        }
+//        boolean leftThumbRecorded = preferences.contains("leftThumb");
+//        boolean rightThumbRecorded = preferences.contains("rightThumb");
+//        boolean thumbRecorded = leftThumbRecorded && rightThumbRecorded;
+//
+//        if (thumbRecorded) {
+//            Intent gotoMainMenu = new Intent(this, MainActivity.class);
+//            startActivity(gotoMainMenu);
+//        }
 
 
         setContentView(R.layout.activity_record_thumb);

@@ -14,7 +14,7 @@ public class GameTimer {
     private final Paint timeRemainingPaint = new Paint();
     private final DateFormat formatter = new SimpleDateFormat("ss:S", Locale.UK);
     
-    private static final int GAME_ROUND_TIME_MILLISECONDS = 180 * 1000;
+    private static final int GAME_ROUND_TIME_MILLISECONDS = 60000;
 
     private long startTime = 0;
     private long elapsedTime = 0;
