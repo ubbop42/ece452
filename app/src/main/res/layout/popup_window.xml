@@ -139,7 +139,8 @@
             android:layout_height="81dp"
             android:layout_marginLeft="8dp"
             android:background="@drawable/button"
-            android:text="Leaderboard"
+            android:text="Leader
+            board"
             android:textColor="@android:color/background_light"
             android:textSize="20dp" />
 
