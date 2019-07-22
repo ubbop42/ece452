@@ -34,10 +34,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import android.util.Log;
 
 public class TypingActivity extends AppCompatActivity {
     final Context context = this;
-    int counter = 0;
+    double counter = 0;
     TextView text;
     TextView score;
     EditText textBox;
@@ -47,6 +48,9 @@ public class TypingActivity extends AppCompatActivity {
     String[] words;
     int index;
     int points = 0;
+    int errors = 0;
+    boolean errorBefore = false;
+    int addition = 50;
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
@@ -121,17 +125,25 @@ public class TypingActivity extends AppCompatActivity {
                 closeKeyboard();
 
                 int width = 1200;
-                int height = 1600;
+                int height = 1700;
                 boolean focusable = true;
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                 TextView score;
                 TextView words;
-                TextView error;
+                TextView accuracy;
                 score = popupView.findViewById(R.id.score);
                 words = popupView.findViewById(R.id.time);
+                accuracy = popupView.findViewById(R.id.accuracy);
                 score.setText("Score : "+points);
                 words.setText("WPM : "+counter*2);
+                if (errors>0){
+                    double percentage = errors/counter;
+                    percentage = percentage *100;
+                    accuracy.setText("Accuracy : "+percentage+"%");
+                } else {
+                    accuracy.setText("Accuracy : 100%");
+                }
 
                 Button menuButton;
                 Button restartButton;
@@ -223,7 +235,15 @@ public class TypingActivity extends AppCompatActivity {
                     Random random = new Random();
                     index = random.nextInt(length);
                     toType = words[index];
-                    points = points + 100;
+                    // points = points + 100;
+                    if (errorBefore == false){
+                        addition = addition + 50;
+                        points = points + addition;
+                    } else {
+                        addition = 100;
+                        errorBefore = false;
+                        points = points + addition;
+                    }
 
                     SpannableString ss = new SpannableString("Enter Word : "+toType);
                     StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
@@ -235,6 +255,11 @@ public class TypingActivity extends AppCompatActivity {
                     textBox.setText(null);
                     score.setText("Score : " + points);
                     counter++;
+                } else {
+                    if (s.toString().length() == toType.length()){
+                        errorBefore = true;
+                        errors++;
+                    }
                 }
             }
         });

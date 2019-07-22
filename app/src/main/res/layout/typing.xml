@@ -68,7 +68,7 @@
         android:layout_marginBottom="300dp"
         android:background="@drawable/rounded_edittext"
         android:gravity="center"
-        android:inputType="text"
+        android:inputType="textNoSuggestions"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:hint="Type here"
