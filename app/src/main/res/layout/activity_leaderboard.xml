@@ -7,6 +7,7 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".LeaderboardActivity">
 
+
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

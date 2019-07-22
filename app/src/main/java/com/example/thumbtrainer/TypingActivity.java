@@ -1,8 +1,11 @@
 package com.example.thumbtrainer;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -33,6 +36,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TypingActivity extends AppCompatActivity {
+    final Context context = this;
     int counter = 0;
     TextView text;
     TextView score;
@@ -102,17 +106,14 @@ public class TypingActivity extends AppCompatActivity {
         MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
         mp.start();
 
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timeText.setText("Time Left : " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-                intent.putExtra("SCORE",counter);
-                intent.putExtra("GAMEMODE", "TypingActivity");
-                startActivity(intent);
+
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_window, null);
@@ -134,8 +135,10 @@ public class TypingActivity extends AppCompatActivity {
 
                 Button menuButton;
                 Button restartButton;
+                Button leaderboardButton;
                 menuButton = popupView.findViewById(R.id.menuButton);
                 restartButton = popupView.findViewById(R.id.restartButton);
+                leaderboardButton = popupView.findViewById(R.id.leaderboardButton);
 
                 menuButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -148,6 +151,53 @@ public class TypingActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), TypingActivity.class);
                         startActivity(intent);
+                    }
+                });
+
+                leaderboardButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        //getUsername();
+                        //final EditText username = (EditText) findViewById(R.id.username);
+
+
+                        LayoutInflater li = LayoutInflater.from(context);
+                        View promptsView = li.inflate(R.layout.prompts, null);
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setView(promptsView);
+                        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                // get user input and set it to result
+                                                // edit text
+                                                String user =userInput.getText().toString();
+                                                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                                intent.putExtra("USER", user);
+                                                intent.putExtra("SCORE",points);
+                                                intent.putExtra("GAMEMODE", "TypingActivity");
+                                                startActivity(intent);
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                        //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                        //intent.putExtra("USER", username.getText().toString());
+                        //intent.putExtra("SCORE",points);
+                        //intent.putExtra("GAMEMODE", "TypingActivity");
+                        //startActivity(intent);
                     }
                 });
 
@@ -189,5 +239,45 @@ public class TypingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getUsername() {
+        final Context context = this;
+        //final EditText username = (EditText) findViewById(R.id.username);
+
+
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.prompts, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                String user =userInput.getText().toString();
+                                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                intent.putExtra("USER", user);
+                                intent.putExtra("SCORE",counter);
+                                intent.putExtra("GAMEMODE", "TypingActivity");
+                                startActivity(intent);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }
