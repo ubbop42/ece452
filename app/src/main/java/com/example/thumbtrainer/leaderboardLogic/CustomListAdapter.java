@@ -60,7 +60,8 @@ public class CustomListAdapter extends BaseAdapter{
         }
 
         final Items m = itemsItems.get(position);
-        holder.name.setText(m.getName());
+        int pos = position + 1;
+        holder.name.setText(pos + "." + m.getName());
         holder.score.setText(m.getScore());
 
         return scoreView;

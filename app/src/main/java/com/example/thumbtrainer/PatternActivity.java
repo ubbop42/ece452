@@ -1,4 +1,7 @@
 package com.example.thumbtrainer;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
@@ -6,14 +9,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import patternView.patternView;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class PatternActivity extends AppCompatActivity {
+    Context context = this;
     int counter = 0;
     private patternView patternView;
     ArrayList<String> listOfPatterns = new ArrayList<>();
@@ -48,10 +54,47 @@ public class PatternActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                    Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-                    intent.putExtra("SCORE",counter);
-                    intent.putExtra("GAMEMODE", "PatternActivity");
-                    startActivity(intent);
+                    //final EditText username = (EditText) findViewById(R.id.username);
+
+
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.prompts, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setView(promptsView);
+                    final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            // get user input and set it to result
+                                            // edit text
+                                            String user = userInput.getText().toString();
+                                            Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                            intent.putExtra("USER", user);
+                                            intent.putExtra("SCORE",counter);
+                                            intent.putExtra("GAMEMODE", "PatternActivity");
+                                            startActivity(intent);
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+                    //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                    //intent.putExtra("USER", username.getText().toString());
+                    //intent.putExtra("SCORE",points);
+                    //intent.putExtra("GAMEMODE", "TypingActivity");
+                    //startActivity(intent);
                 }
             }.start();
         }

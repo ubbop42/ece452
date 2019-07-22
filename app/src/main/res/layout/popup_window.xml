@@ -115,7 +115,7 @@
 
         <Button
             android:id="@+id/menuButton"
-            android:layout_width="157dp"
+            android:layout_width="104dp"
             android:layout_height="81dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/button"
@@ -124,14 +124,25 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/restartButton"
-            android:layout_width="157dp"
+        android:id="@+id/restartButton"
+        android:layout_width="104dp"
+        android:layout_height="81dp"
+        android:layout_marginLeft="8dp"
+        android:textSize="20dp"
+        android:textColor="@android:color/background_light"
+        android:background="@drawable/button"
+        android:text="Restart" />
+
+        <Button
+            android:id="@+id/leaderboardButton"
+            android:layout_width="104dp"
             android:layout_height="81dp"
             android:layout_marginLeft="8dp"
             android:background="@drawable/button"
-            android:text="Restart"
+            android:text="Leaderboard" />
             android:textColor="@android:color/background_light"
             android:textSize="20dp" />
 
     </LinearLayout>
+
 </RelativeLayout>

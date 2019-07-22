@@ -1,17 +1,22 @@
 package com.example.thumbtrainer;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,6 +27,7 @@ import swipView.GameFragment;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SwipeActivity extends AppCompatActivity implements GameFragment.OnGameOver {
+    Context context = this;
     int counter = 0;
     TextView counterText;
     TextView timeText;
@@ -43,17 +49,57 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
         MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
         mp.start();
 
-//        new CountDownTimer(150000, 1000) {
-//
-//            public void onTick(long millisUntilFinished) {
-//                timeText.setText("" + millisUntilFinished / 1000);
-//            }
-//
-//            public void onFinish() {
-//                // TODO: launch leaderboard
-//            }
-//        }.start();
-//
+ /*       new CountDownTimer(150000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timeText.setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                final EditText username = (EditText) findViewById(R.id.username);
+
+
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.prompts, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setView(promptsView);
+                    final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            // get user input and set it to result
+                                            // edit text
+                                            username.setText(userInput.getText());
+                                            Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                            intent.putExtra("USER", username.getText().toString());
+                                            intent.putExtra("SCORE",counter);
+                                            intent.putExtra("GAMEMODE", "SwipeActivity");
+                                            startActivity(intent);
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+                    //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                    //intent.putExtra("USER", username.getText().toString());
+                    //intent.putExtra("SCORE",points);
+                    //intent.putExtra("GAMEMODE", "TypingActivity");
+                    //startActivity(intent);
+            }
+        }.start();
+*/
 //        nextGesture();
 
         GameFragment gameFragment = new GameFragment();
@@ -65,11 +111,48 @@ public class SwipeActivity extends AppCompatActivity implements GameFragment.OnG
     }
 
     public void onGameOver(int score) {
-        Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
-        intent.putExtra("SCORE",score);
-        intent.putExtra("GAMEMODE", "SwipeActivity");
-        startActivity(intent);
-        Toast.makeText(this, "score"+score, LENGTH_SHORT).show ();
+        Toast.makeText(this, "score" + score, LENGTH_SHORT).show();
+        //final EditText username = (EditText) findViewById(R.id.username);
+
+
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.prompts, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to result
+                                // edit text
+                                String user =userInput.getText().toString();
+                                Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+                                intent.putExtra("USER", user);
+                                intent.putExtra("SCORE", counter);
+                                intent.putExtra("GAMEMODE", "SwipeActivity");
+                                startActivity(intent);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+        //Intent intent = new Intent(getBaseContext(), LeaderboardActivity.class);
+        //intent.putExtra("USER", username.getText().toString());
+        //intent.putExtra("SCORE",points);
+        //intent.putExtra("GAMEMODE", "TypingActivity");
+        //startActivity(intent);
     }
 
 //    public void nextGesture(){
