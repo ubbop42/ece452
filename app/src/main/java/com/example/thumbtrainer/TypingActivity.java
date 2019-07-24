@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -110,7 +111,7 @@ public class TypingActivity extends AppCompatActivity {
         MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hmk);
         mp.start();
 
-        new CountDownTimer(60000, 1000) {
+        new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timeText.setText("Time Left : " + millisUntilFinished / 1000);
@@ -140,7 +141,8 @@ public class TypingActivity extends AppCompatActivity {
                 if (errors>0){
                     double percentage = errors/counter;
                     percentage = percentage *100;
-                    accuracy.setText("Accuracy : "+percentage+"%");
+                    DecimalFormat f = new DecimalFormat("##.00");
+                    accuracy.setText("Accuracy : "+f.format(percentage)+"%");
                 } else {
                     accuracy.setText("Accuracy : 100%");
                 }

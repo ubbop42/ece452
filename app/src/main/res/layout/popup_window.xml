@@ -19,8 +19,15 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="50sp" />
+        android:textSize="70sp" />
 
+    <ImageView
+        android:layout_width="343dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="110dp"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/stars5" />
 
     <TextView
         android:id="@+id/time"
@@ -28,15 +35,15 @@
         android:layout_height="64dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="time"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"
         android:textSize="25sp" />
 
     <TextView
@@ -45,16 +52,16 @@
         android:layout_height="75dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="13dp"
         android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="13dp"
         android:layout_marginBottom="8dp"
         android:text="score"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"
         android:textSize="25sp" />
 
     <TextView
@@ -66,7 +73,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="13dp"
         android:layout_marginLeft="13dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="13dp"
         android:layout_marginBottom="8dp"
@@ -80,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center">
 
         <Button
@@ -94,23 +101,22 @@
             android:textSize="20dp" />
 
         <Button
-        android:id="@+id/restartButton"
-        android:layout_width="104dp"
-        android:layout_height="81dp"
-        android:layout_marginLeft="8dp"
-        android:textSize="20dp"
-        android:textColor="@android:color/background_light"
-        android:background="@drawable/button"
-        android:text="Restart" />
+            android:id="@+id/restartButton"
+            android:layout_width="104dp"
+            android:layout_height="81dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/button"
+            android:text="Restart"
+            android:textColor="@android:color/background_light"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/leaderboardButton"
             android:layout_width="104dp"
             android:layout_height="81dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             android:background="@drawable/button"
-            android:text="Leader
-            board"
+            android:text="Leader Board"
             android:textColor="@android:color/background_light"
             android:textSize="20dp" />
 
